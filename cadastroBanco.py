@@ -1,5 +1,6 @@
 from time import sleep
 
+
 def salvarDados(clientes, contas):
     with open("clientes.txt", "w") as f:
         for cpf, dados in clientes.items():
@@ -8,6 +9,7 @@ def salvarDados(clientes, contas):
         for conta, dados in contas.items():
             historico = ",".join(map(str, dados['historico']))
             f.write(f"{conta};{dados['cpf']};{dados['saldo']};{historico}\n")
+
 
 def carregarDados():
     clientes = {}
@@ -25,11 +27,13 @@ def carregarDados():
             for linha in f:
                 conta, cpf, saldo, historico = linha.strip().split(";")
                 historico = list(map(float, historico.split(",")))
-                contas[conta] = {'cpf': cpf, 'saldo': float(saldo), 'historico': historico}
+                contas[conta] = {'cpf': cpf, 'saldo': float(
+                    saldo), 'historico': historico}
     except FileNotFoundError:
         pass
 
     return clientes, contas
+
 
 def opcao(min, max):
     op = 0
@@ -41,6 +45,7 @@ def opcao(min, max):
         except ValueError:
             print("Digite apenas números!\n")
     return op
+
 
 def cadastroCliente(clientes):
     print("\n📌 Iniciando cadastro de cliente...\n")
@@ -59,16 +64,19 @@ def cadastroCliente(clientes):
     clientes[cpf] = {'nome': nome, 'telefone': tel}
     print("✅ Cadastro realizado com sucesso!\n")
 
+
 def listarClientes(clientes):
     print("\n📋 Listando clientes...\n")
     sleep(1)
     if clientes:
         for cliente in clientes:
             print(f"👤 Nome: {clientes[cliente]['nome']}")
+            print
             print(f"📞 Telefone: {clientes[cliente]['telefone']}")
             print("-------------------------------")
     else:
         print("⚠️ Nenhum cliente cadastrado!\n")
+
 
 def buscaCPF(clientes):
     print("\n🔎 Buscando cliente...\n")
@@ -83,6 +91,7 @@ def buscaCPF(clientes):
             print("⚠️ CPF não cadastrado!\n")
     else:
         print("⚠️ Nenhum cliente cadastrado!\n")
+
 
 def removeCliente(clientes):
     print("\n🗑️ Removendo cliente...\n")
@@ -101,7 +110,8 @@ def removeCliente(clientes):
             print("⚠️ CPF não cadastrado!\n")
     else:
         print("⚠️ Nenhum cliente cadastrado!\n")
-  
+
+
 def subMenuClientes(clientes):
     while True:
         print("\n--- SubMenu Clientes ---")
@@ -126,6 +136,7 @@ def subMenuClientes(clientes):
             print("🔙 Retornando ao menu principal...\n")
             return
 
+
 def cadastroConta(clientes, contas):
     print("\n📌 Iniciando cadastro de conta...\n")
     sleep(1)
@@ -147,6 +158,7 @@ def cadastroConta(clientes, contas):
     contas[novaConta] = {'cpf': cpf, 'saldo': 0, 'historico': [0, 0, 0]}
     print(f"✅ Conta {novaConta} criada com sucesso!\n")
 
+
 def listarContas(contas):
     print("\n📋 Listando contas bancárias...\n")
     sleep(1)
@@ -164,6 +176,7 @@ def listarContas(contas):
             print(f"🔼 Depósitos: R${dados['historico'][0]:.2f}")
             print(f"🔽 Saques: R${dados['historico'][1]:.2f}")
         print("-------------------------------------")
+
 
 def removerConta(contas):
     print("\n🗑️ Removendo conta...\n")
@@ -185,6 +198,7 @@ def removerConta(contas):
         del contas[numeroConta]
         print("✅ Conta removida com sucesso!\n")
 
+
 def subMenuContasBancarias(clientes, contas):
     while True:
         print("\n--- SubMenu Contas Bancárias ---")
@@ -204,6 +218,7 @@ def subMenuContasBancarias(clientes, contas):
         else:
             print("🔙 Retornando ao menu principal...\n")
             return
+
 
 def deposito(contas):
     print("\n💰 Iniciando depósito...\n")
@@ -229,6 +244,7 @@ def deposito(contas):
     else:
         print("⚠️ Conta ou CPF incorretos!\n")
 
+
 def saque(contas):
     print("\n🏧 Iniciando saque...\n")
     sleep(1)
@@ -252,6 +268,7 @@ def saque(contas):
             print("⚠️ Valor inválido!\n")
     else:
         print("⚠️ Conta ou CPF incorretos!\n")
+
 
 def transferencia(contas):
     print("\n🔁 Iniciando transferência...\n")
@@ -287,6 +304,7 @@ def transferencia(contas):
     else:
         print("⚠️ Dados incorretos. Verifique as contas e os CPFs.\n")
 
+
 def subMenutransaçoes(contas):
     while True:
         print("\n--- SubMenu Transações ---")
@@ -307,6 +325,7 @@ def subMenutransaçoes(contas):
             print("🔙 Retornando ao menu principal...\n")
             return
 
+
 def saquesRelatorio(clientes, contas):
     print("\n📊 Relatório de saldos por cliente...\n")
     sleep(1)
@@ -321,8 +340,10 @@ def saquesRelatorio(clientes, contas):
         print(f"👤 Cliente: {cliente['nome']}")
         for conta in contas:
             if contas[conta]['cpf'] == cpf:
-                print(f"Conta: {conta} | Saldo: R${contas[conta]['saldo']:.2f}")
+                print(
+                    f"Conta: {conta} | Saldo: R${contas[conta]['saldo']:.2f}")
         print("-------------------------------")
+
 
 def totalEmCaixa(contas):
     print("\n💵 Total em caixa do banco...\n")
@@ -333,6 +354,7 @@ def totalEmCaixa(contas):
 
     total = sum(conta['saldo'] for conta in contas.values())
     print(f"🧾 Total em caixa: R${total:.2f}\n")
+
 
 def movimentaçao(contas):
     print("\n📈 Histórico de movimentações...\n")
@@ -345,6 +367,7 @@ def movimentaçao(contas):
         print(f"Conta: {conta}")
         print(f"🔁 Total de movimentações: {dados['historico'][2]}")
         print("-------------------------------")
+
 
 def subMenuRelatórios(clientes, contas):
     while True:
@@ -366,9 +389,10 @@ def subMenuRelatórios(clientes, contas):
             print("🔙 Retornando ao menu principal...\n")
             return
 
+
 def main():
     clientes, contas = carregarDados()
-    
+
     while True:
         print("\n=== 🏦 Sistema Bancário ===")
         print("1. Gerenciar clientes")
@@ -393,5 +417,6 @@ def main():
             print("🚪 Encerrando o programa...\n")
             sleep(2)
             break
+
 
 main()
